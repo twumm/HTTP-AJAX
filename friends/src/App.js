@@ -7,7 +7,7 @@ import './App.css';
 
 function App() {
   const [friends, setFriends] = useState([]);
-  const [error, setError] = useState('');
+  const [requestError, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const getAllFriends = async () => {
@@ -21,6 +21,10 @@ function App() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    getAllFriends();
+  }, []);
 
   return (
     <div className="App">

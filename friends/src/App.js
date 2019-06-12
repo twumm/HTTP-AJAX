@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FriendsList from './components/FriendsList';
+import AddFriend from './components/AddFriend';
 import './App.css';
 
 
@@ -12,7 +13,7 @@ function App() {
   const getAllFriends = async () => {
     setLoading(true);
     try {
-      const friendsData = await axios.get('http://127.0.0.1:5000/friend');
+      const friendsData = await axios.get('http://127.0.0.1:5000/friends');
       setFriends(friendsData.data);
     } catch (error) {
       setError(error.message);
@@ -32,6 +33,7 @@ function App() {
         requestError={requestError}
         loading={loading}
       />
+      <AddFriend />
     </div>
   );
 }

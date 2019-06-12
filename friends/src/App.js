@@ -28,7 +28,9 @@ function App() {
 
   return (
     <div className="App">
-      <FriendsList />
+      <FriendsList
+        friends={friends}
+      />
     </div>
   );
 }

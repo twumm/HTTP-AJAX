@@ -13,6 +13,10 @@ function App() {
   const [friendAge, setFriendAge] = useState(0);
   const [friendEmail, setFriendEmail] = useState('');
 
+  useEffect(() => {
+    getAllFriends();
+  }, []);
+
   const getAllFriends = async () => {
     setLoading(true);
     try {
@@ -24,10 +28,6 @@ function App() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    getAllFriends();
-  }, []);
 
   const addFriendInputHandler = event => {};
 

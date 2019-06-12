@@ -4,7 +4,6 @@ import FriendsList from './components/FriendsList';
 import './App.css';
 
 
-
 function App() {
   const [friends, setFriends] = useState([]);
   const [requestError, setError] = useState('');
@@ -13,7 +12,7 @@ function App() {
   const getAllFriends = async () => {
     setLoading(true);
     try {
-      const friendsData = await axios.get('http://127.0.0.1:5000/friends');
+      const friendsData = await axios.get('http://127.0.0.1:5000/friend');
       setFriends(friendsData.data);
     } catch (error) {
       setError(error.message);
@@ -30,6 +29,8 @@ function App() {
     <div className="App">
       <FriendsList
         friends={friends}
+        requestError={requestError}
+        loading={loading}
       />
     </div>
   );

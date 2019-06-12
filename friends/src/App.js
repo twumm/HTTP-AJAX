@@ -29,7 +29,25 @@ function App() {
     }
   };
 
-  const addFriendInputHandler = event => {};
+  const addFriendInputHandler = (event) => {
+    event.preventDefault();
+    const eventName = event.target.name;
+    const { value } = event.target;
+
+    switch (eventName) {
+      case 'name':
+        setFriendName(value);
+        break;
+      case 'age':
+        setFriendAge(value);
+        break;
+      case 'email':
+        setFriendEmail(value);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <div className="App">

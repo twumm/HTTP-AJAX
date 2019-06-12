@@ -9,6 +9,9 @@ function App() {
   const [friends, setFriends] = useState([]);
   const [requestError, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [friendName, setFriendName] = useState('');
+  const [friendAge, setFriendAge] = useState(0);
+  const [friendEmail, setFriendEmail] = useState('');
 
   const getAllFriends = async () => {
     setLoading(true);
@@ -26,6 +29,8 @@ function App() {
     getAllFriends();
   }, []);
 
+  const addFriendInputHandler = event => {};
+
   return (
     <div className="App">
       <FriendsList
@@ -33,7 +38,12 @@ function App() {
         requestError={requestError}
         loading={loading}
       />
-      <AddFriend />
+      <AddFriend
+        name={friendName}
+        age={friendAge}
+        email={friendEmail}
+        addFriendInputHandler={addFriendInputHandler}
+      />
     </div>
   );
 }

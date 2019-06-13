@@ -32,19 +32,17 @@ function App() {
     }
   };
 
+  // eslint-disable-next-line consistent-return
   const addFriend = async (event) => {
     event.preventDefault();
     setLoading(true);
 
-    const newFriendData = {
-      name: friend.name,
-      age: friend.age,
-      email: friend.email,
-    };
+    const urlToCall = editMode ? `${friendsURL}/${friend.id}` : friendsURL;
 
     try {
-      await axios.post(friendsURL, newFriendData)
-        .then(() => getAllFriends());
+      return editMode
+        ? await axios.put(urlToCall, friend).then(() => getAllFriends())
+        : await axios.post(urlToCall, friend).then(() => getAllFriends());
     } catch (error) {
       setError(error.message);
     } finally {
@@ -54,6 +52,7 @@ function App() {
         age: 0,
         email: '',
       });
+      setEditMode(false);
     }
   };
 

@@ -37,12 +37,12 @@ function App() {
     event.preventDefault();
     setLoading(true);
 
-    const urlToCall = editMode ? `${friendsURL}/${friend.id}` : friendsURL;
-
     try {
       return editMode
-        ? await axios.put(urlToCall, friend).then(() => getAllFriends())
-        : await axios.post(urlToCall, friend).then(() => getAllFriends());
+        ? await axios.put(`${friendsURL}/${friend.id}`, friend)
+          .then(() => getAllFriends())
+        : await axios.post(friendsURL, friend)
+          .then(() => getAllFriends());
     } catch (error) {
       setError(error.message);
     } finally {

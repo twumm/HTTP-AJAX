@@ -12,6 +12,7 @@ export default function Friend({ friends, setFriendToEdit }) {
             <td>{friend.name}</td>
             <td>{friend.email}</td>
             <td>{friend.age}</td>
+            <td>X</td>
           </tr>
         ))
       }

@@ -12,7 +12,7 @@ function App() {
   const [editMode, setEditMode] = useState(false);
   const [friend, setUserInput] = useReducer((state, newState) => (
     { ...state, ...newState }
-  ), { name: '', age: 0, email: '' });
+  ), { name: '', age: 0, email: '', nickname: '' });
 
   const friendsURL = 'http://127.0.0.1:5000/friends';
 
@@ -51,6 +51,7 @@ function App() {
         name: '',
         age: 0,
         email: '',
+        nickname: '',
       });
       setEditMode(false);
     }
@@ -95,6 +96,7 @@ function App() {
         name={friend.name}
         age={friend.age}
         email={friend.email}
+        nickname={friend.nickname}
         addFriendInputHandler={addFriendInputHandler}
         addFriend={addFriend}
         editMode={editMode}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AddFriend({ name, age, email, addFriendInputHandler, addFriend, editMode }) {
+export default function AddFriend({ name, age, email, nickname, addFriendInputHandler, addFriend, editMode }) {
   return (
     <div>
       <h4>Add a friend</h4>
@@ -23,6 +23,12 @@ export default function AddFriend({ name, age, email, addFriendInputHandler, add
           type="text"
           name="email"
           value={email}
+          onChange={addFriendInputHandler}
+        />
+        <input
+          type="text"
+          name="nickname"
+          value={nickname}
           onChange={addFriendInputHandler}
         />
         <input

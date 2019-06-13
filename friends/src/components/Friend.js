@@ -14,6 +14,7 @@ export default function Friend({ friends, setFriendToEdit, deleteFriend }) {
             <td>{friend.name}</td>
             <td>{friend.email}</td>
             <td>{friend.age}</td>
+            <td>{friend.nickname}</td>
             <td
               onClick={event => deleteFriend(event, friend.id)}
             >

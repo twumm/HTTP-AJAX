@@ -70,6 +70,18 @@ function App() {
     setUserInput({ [eventName]: value });
   };
 
+  const deleteFriend = async (event, id) => {
+    setLoading(true);
+    try {
+      await axios.delete(`${friendsURL}/${id}`)
+        .then(() => getAllFriends());
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="App">
       <FriendsList
@@ -77,6 +89,7 @@ function App() {
         requestError={requestError}
         loading={loading}
         setFriendToEdit={setFriendToEdit}
+        deleteFriend={deleteFriend}
       />
       <AddFriend
         name={friend.name}

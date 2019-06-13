@@ -56,6 +56,11 @@ function App() {
     }
   };
 
+  const setFriendToEdit = (event, friendToEdit) => {
+    event.preventDefault();
+    setUserInput(friendToEdit);
+  };
+
   const addFriendInputHandler = (event) => {
     event.preventDefault();
     const eventName = event.target.name;
@@ -70,6 +75,7 @@ function App() {
         friends={friends}
         requestError={requestError}
         loading={loading}
+        setFriendToEdit={setFriendToEdit}
       />
       <AddFriend
         name={friend.name}

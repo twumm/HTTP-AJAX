@@ -9,6 +9,7 @@ function App() {
   const [friends, setFriends] = useState([]);
   const [requestError, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [friend, setUserInput] = useReducer((state, newState) => (
     { ...state, ...newState }
   ), { name: '', age: 0, email: '' });
@@ -59,6 +60,7 @@ function App() {
   const setFriendToEdit = (event, friendToEdit) => {
     event.preventDefault();
     setUserInput(friendToEdit);
+    setEditMode(true);
   };
 
   const addFriendInputHandler = (event) => {
@@ -83,6 +85,7 @@ function App() {
         email={friend.email}
         addFriendInputHandler={addFriendInputHandler}
         addFriend={addFriend}
+        editMode={editMode}
       />
     </div>
   );

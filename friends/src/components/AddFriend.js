@@ -1,10 +1,12 @@
 import React from 'react';
 
-export default function AddFriend({ name, age, email, addFriendInputHandler }) {
+export default function AddFriend({ name, age, email, addFriendInputHandler, addFriend }) {
   return (
     <div>
       <h4>Add a friend</h4>
-      <form>
+      <form
+        onSubmit={event => addFriend(event)}
+      >
         <input
           type="text"
           name="name"

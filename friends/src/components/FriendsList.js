@@ -10,6 +10,7 @@ export default function FriendsList({ friends, requestError, loading, setFriendT
             <th>Name</th>
             <th>Email</th>
             <th>Age</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <Friend

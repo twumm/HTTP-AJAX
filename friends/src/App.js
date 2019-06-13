@@ -13,6 +13,8 @@ function App() {
     { ...state, ...newState }
   ), { name: '', age: 0, email: '' });
 
+  const friendsURL = 'http://127.0.0.1:5000/friends';
+
   useEffect(() => {
     getAllFriends();
   }, []);
@@ -20,12 +22,37 @@ function App() {
   const getAllFriends = async () => {
     setLoading(true);
     try {
-      const friendsData = await axios.get('http://127.0.0.1:5000/friends');
+      const friendsData = await axios.get(friendsURL);
       setFriends(friendsData.data);
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const addFriend = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const newFriendData = {
+      name: friend.name,
+      age: friend.age,
+      email: friend.email,
+    };
+
+    try {
+      await axios.post(friendsURL, newFriendData)
+        .then(() => getAllFriends());
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+      setUserInput({
+        name: '',
+        age: 0,
+        email: '',
+      });
     }
   };
 
@@ -49,6 +76,7 @@ function App() {
         age={friend.age}
         email={friend.email}
         addFriendInputHandler={addFriendInputHandler}
+        addFriend={addFriend}
       />
     </div>
   );

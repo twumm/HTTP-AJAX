@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import FriendsList from './components/FriendsList';
 import AddFriend from './components/AddFriend';
@@ -9,9 +9,12 @@ function App() {
   const [friends, setFriends] = useState([]);
   const [requestError, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [friendName, setFriendName] = useState('');
-  const [friendAge, setFriendAge] = useState(0);
-  const [friendEmail, setFriendEmail] = useState('');
+  const [editMode, setEditMode] = useState(false);
+  const [friend, setUserInput] = useReducer((state, newState) => (
+    { ...state, ...newState }
+  ), { name: '', age: '', email: '', nickname: '' });
+
+  const friendsURL = 'http://127.0.0.1:5000/friends';
 
   useEffect(() => {
     getAllFriends();
@@ -20,7 +23,7 @@ function App() {
   const getAllFriends = async () => {
     setLoading(true);
     try {
-      const friendsData = await axios.get('http://127.0.0.1:5000/friends');
+      const friendsData = await axios.get(friendsURL);
       setFriends(friendsData.data);
     } catch (error) {
       setError(error.message);
@@ -29,23 +32,54 @@ function App() {
     }
   };
 
+  // eslint-disable-next-line consistent-return
+  const addFriend = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    try {
+      return editMode
+        ? await axios.put(`${friendsURL}/${friend.id}`, friend)
+          .then(() => getAllFriends())
+        : await axios.post(friendsURL, friend)
+          .then(() => getAllFriends());
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+      setUserInput({
+        name: '',
+        age: '',
+        email: '',
+        nickname: '',
+      });
+      setEditMode(false);
+    }
+  };
+
+  const setFriendToEdit = (event, friendToEdit) => {
+    event.preventDefault();
+    setUserInput(friendToEdit);
+    setEditMode(true);
+  };
+
   const addFriendInputHandler = (event) => {
     event.preventDefault();
     const eventName = event.target.name;
     const { value } = event.target;
 
-    switch (eventName) {
-      case 'name':
-        setFriendName(value);
-        break;
-      case 'age':
-        setFriendAge(value);
-        break;
-      case 'email':
-        setFriendEmail(value);
-        break;
-      default:
-        break;
+    setUserInput({ [eventName]: value });
+  };
+
+  const deleteFriend = async (event, id) => {
+    setLoading(true);
+    try {
+      await axios.delete(`${friendsURL}/${id}`)
+        .then(() => getAllFriends());
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,12 +89,17 @@ function App() {
         friends={friends}
         requestError={requestError}
         loading={loading}
+        setFriendToEdit={setFriendToEdit}
+        deleteFriend={deleteFriend}
       />
       <AddFriend
-        name={friendName}
-        age={friendAge}
-        email={friendEmail}
+        name={friend.name}
+        age={friend.age}
+        email={friend.email}
+        nickname={friend.nickname}
         addFriendInputHandler={addFriendInputHandler}
+        addFriend={addFriend}
+        editMode={editMode}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import Friend from './Friend';
 
-export default function FriendsList({ friends, requestError, loading }) {
+export default function FriendsList({ friends, requestError, loading, setFriendToEdit, deleteFriend }) {
   return (
     <div>
       <table>
@@ -10,10 +10,14 @@ export default function FriendsList({ friends, requestError, loading }) {
             <th>Name</th>
             <th>Email</th>
             <th>Age</th>
+            <th>Nickname</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <Friend
           friends={friends}
+          setFriendToEdit={setFriendToEdit}
+          deleteFriend={deleteFriend}
         />
       </table>
       {
